@@ -16,7 +16,8 @@ rateLimiter.setup({
 // creates a new limit
 var limits = rateLimiter.createLimit({
   key: () => {return 'global'},
-  rate: rate
+  rate: rate,
+  name: 'all_requests'
 })
 
 // use the limit handler

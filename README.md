@@ -26,7 +26,7 @@ server.use(limit)
 
 ### Methods
 
-**setup(options)**  
+**setup(object)**  
 Creates a redis client and connects using provided connection string.  
 Options:
 
@@ -38,7 +38,7 @@ verbose | Boolean | no        | Default: false
 
 
 
-**createLimit(options)**  
+**createLimit(object)**  
 Creates a new rate limit. See [Options](#options) for details.
 
 
@@ -46,15 +46,23 @@ Creates a new rate limit. See [Options](#options) for details.
 ## Options
 
 **key**  
-type: function  
+Type: function  
+Mandatory: true  
 Returns the value for request grouping (e.g. IP, endpoint). The provided argument is the request object.  
 Return a constant for the limit to apply globally to all requests.
 
 **rate**  
-type: string  
+Type: string  
+Mandatory: true
 The rate to apply. Must be in the form **number of requests** *slash* **unit of time**.  
 Accepted time units: 's' (second), 'm' (minute), 'h' (hour), 'd' (day).
 
+**name**  
+Type: string  
+Mandatory: no (default: random string)  
+Name of the limit.
+
 **verbose**  
-type: boolean  
+Type: boolean  
+Mandatory: no (default: false)  
 Enable/disable verbose logging. Overwrites the global setting.
