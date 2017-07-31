@@ -7,13 +7,16 @@ var server = restify.createServer(),
     rate = process.argv[2]
 
 // set up limiter with redis connection
-rateLimiter.connect('redis://localhost:6379')
+rateLimiter.setup({
+  redis: 'redis://localhost:6379',
+  logger: console,
+  verbose: true
+})
 
 // creates a new limit
 var limits = rateLimiter.createLimit({
   key: () => {return 'global'},
-  rate: rate,
-  verbose: true
+  rate: rate
 })
 
 // use the limit handler

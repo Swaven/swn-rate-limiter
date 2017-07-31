@@ -8,12 +8,14 @@ Creating a new limit returns a standard `(req, res, next)` function that can eas
 ````javascript
 limiter = require('swn-rate-limiter');
 
-limiter.connect('redis://localhost:6379');
+limiter.setup({
+  redis: 'redis://localhost:6379',
+  verbose: true
+});
 
 var limit = limiter.createLimit({
   key: (x) => {return 'global'},
-  rate: '50/s',
-  verbose: true
+  rate: '50/s'
 })
 
 server.use(limit)
@@ -24,8 +26,17 @@ server.use(limit)
 
 ### Methods
 
-**connect(connection_string)**  
-Creates a redis client and connects using provided connection string.
+**setup(options)**  
+Creates a redis client and connects using provided connection string.  
+Options:
+
+Name    | Type    | Mandatory | Description
+--------|---------|-----------|-------------
+redis   | String  | yes       | redis connection string
+logger  | Object  | no        | logger object. Must expose debug/info/error methods. Default: console.
+verbose | Boolean | no        | Default: false
+
+
 
 **createLimit(options)**  
 Creates a new rate limit. See [Options](#options) for details.
@@ -46,4 +57,4 @@ Accepted time units: 's' (second), 'm' (minute), 'h' (hour), 'd' (day).
 
 **verbose**  
 type: boolean  
-Enable/disable verbose logging.
+Enable/disable verbose logging. Overwrites the global setting.
