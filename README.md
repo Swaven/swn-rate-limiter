@@ -1,9 +1,9 @@
 # swn-rate-limiter
-Express/Restify middleware that manages rate limiting &amp; request throttling.
+Nodejs middleware that manages rate limiting &amp; request throttling.
 
 ## Usage
 
-Creating a new limit returns a standard `(req, res, next)` function that can easily be plugged into Express or Restify.
+Creating a new limit returns a function handler that can easily be plugged into Restify and other frameworks that support the standard `(req, res, next)` middleware format.
 
 ````javascript
 limiter = require('swn-rate-limiter');
