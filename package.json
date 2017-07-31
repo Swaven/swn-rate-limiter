@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Swaven/swn-rate-limiter#readme",
   "devDependencies": {
+    "chalk": "^2.0.1",
     "restify": "^5.0.1"
   },
   "dependencies": {
