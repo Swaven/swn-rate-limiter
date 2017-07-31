@@ -1,0 +1,32 @@
+{
+  "name": "swn-rate-limiter",
+  "version": "1.0.0",
+  "description": "Express/Restify middleware for rate limiting",
+  "main": "lib/middleware.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Swaven/swn-rate-limiter.git"
+  },
+  "keywords": [
+    "restify",
+    "middleware",
+    "rate-limit",
+    "throttling"
+  ],
+  "author": "Swaven",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Swaven/swn-rate-limiter/issues"
+  },
+  "homepage": "https://github.com/Swaven/swn-rate-limiter#readme",
+  "devDependencies": {
+    "restify": "^5.0.1"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "redis": "^2.7.1"
+  }
+}
