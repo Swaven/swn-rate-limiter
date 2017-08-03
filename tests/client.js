@@ -5,7 +5,8 @@ const http = require('http'),
 
 var duration = parseInt(process.argv[2], 10) * 1000,
     interval = parseFloat(process.argv[3], 10) * 1000,
-    results = {}
+    results = {},
+    i = 0
 
 if (!duration || !interval)
   throw new Error('invalid arguments')
@@ -45,7 +46,10 @@ function output(status){
     default:
       fn: chalk.yellow;break;
   }
-  process.stdout.write(fn('.'))
+  let c = ++i % 10
+  process.stdout.write(fn(c))
+  if (c === 0)
+    process.stdout.write(fn(' '))
 }
 
 function reportResults(){

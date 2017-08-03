@@ -24,7 +24,8 @@
   "homepage": "https://github.com/Swaven/swn-rate-limiter#readme",
   "devDependencies": {
     "chalk": "^2.0.1",
-    "restify": "^5.0.1"
+    "restify": "^5.0.1",
+    "swn-logger": "^1.0.0"
   },
   "dependencies": {
     "bluebird": "^3.5.0",

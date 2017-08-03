@@ -1,7 +1,16 @@
 'use strict'
 
+const logConfig = {
+  level: 'debug',
+  targets: [{type: 'stdout'},
+            {type: 'file', path: 'trace.log'}]
+}
+
 const restify = require('restify'),
+      logger = require('swn-logger').create('server', logConfig),
       rateLimiter = require('../lib/middleware.js')
+
+
 
 var server = restify.createServer(),
     rate = process.argv[2]
@@ -9,7 +18,7 @@ var server = restify.createServer(),
 // set up limiter with redis connection
 rateLimiter.setup({
   redis: 'redis://localhost:6379',
-  logger: console,
+  logger: logger,
   verbose: true
 })
 
@@ -17,7 +26,7 @@ rateLimiter.setup({
 var limits = rateLimiter.createLimit({
   key: () => {return 'global'},
   rate: rate,
-  name: 'all_requests'
+  name: 'all'
 })
 
 // use the limit handler
@@ -29,5 +38,5 @@ server.get('/hello', (req, res, next) => {
 })
 
 server.listen(8080, () => {
-  console.log('listening...')
+  logger.info('listening...')
 })
