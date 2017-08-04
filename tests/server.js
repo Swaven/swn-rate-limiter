@@ -18,6 +18,7 @@ var server = restify.createServer(),
 // set up limiter with redis connection
 rateLimiter.setup({
   redis: 'redis://localhost:6379',
+  appName: 'demo-server',
   logger: logger,
   verbose: true
 })

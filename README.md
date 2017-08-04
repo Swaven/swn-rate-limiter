@@ -1,15 +1,18 @@
 # swn-rate-limiter
-Nodejs middleware that manages rate limiting &amp; request throttling.
+Nodejs middleware that manages rate limiting &amp; request throttling. Uses the token bucket algorithm.
 
 ## Usage
 
-Creating a new limit returns a function handler that can easily be plugged into Restify and other frameworks that support the standard `(req, res, next)` middleware format.
+Creating a new limit returns a function handler that can easily be plugged into Restify and other frameworks that support the common `(req, res, next)` middleware signature  format.
+
+Limits can be instance-specific or shared across multiple server. See the *name* options.
 
 ````javascript
 limiter = require('swn-rate-limiter');
 
 limiter.setup({
   redis: 'redis://localhost:6379',
+  appName: 'my-app',
   verbose: true
 });
 
@@ -26,19 +29,20 @@ server.use(limit)
 
 ### Methods
 
-**setup(object)**  
+**setup(options)**  
 Creates a redis client and connects using provided connection string.  
 Options:
 
 Name    | Type    | Mandatory | Description
 --------|---------|-----------|-------------
 redis   | String  | yes       | redis connection string
+appName | String  | no       | An identifier for the app using the module. Defaults: ""
 logger  | Object  | no        | logger object. Must expose debug/info/error methods. Default: console.
 verbose | Boolean | no        | Default: false
 
+*NB*: Not specifying an appName will cause issues if multiple applications have limits with the same name and share the same redis server.
 
-
-**createLimit(object)**  
+**createLimit(options)**  
 Creates a new rate limit. See [Options](#options) for details.
 
 
@@ -49,18 +53,28 @@ Creates a new rate limit. See [Options](#options) for details.
 Type: function  
 Mandatory: true  
 Returns the value for request grouping (e.g. IP, endpoint). The provided argument is the request object.  
-Return a constant for the limit to apply globally to all requests.
+Return a constant for a global limit that applies to all requests.
 
 **rate**  
 Type: string  
-Mandatory: true
-The rate to apply. Must be in the form **number of requests** *slash* **unit of time**.  
+Mandatory: true  
+The rate to apply. Must be in the form **number of requests** *slash* **time window**.  Time window can be a single unit, or a number and a unit for more complex rules (see examples below).  
 Accepted time units: 's' (second), 'm' (minute), 'h' (hour), 'd' (day).
+
+Examples:  
+100/s: 100 requests per second  
+300/5min: 300 request every 5 minutes
 
 **name**  
 Type: string  
 Mandatory: no (default: random string)  
-Name of the limit.
+Limit identifier. If multiple limits share the same name, there will be a single bucket for them. So, limits that must apply cross-instances must have an explicit name, otherwise the random names will not match across instances.  
+On the other hand, instance-specific limits (e.g. max requests per server) must have a random name.
+
+**logger**  
+Type: object  
+Mandatory: no (default: none)  
+Overwrites the global logger for this limit only.
 
 **verbose**  
 Type: boolean  
