@@ -1,5 +1,10 @@
 'use strict'
 
+/*
+    A simple restify server for testing limits.
+    Usage: node ./server.js limit_rate
+*/
+
 const logConfig = {
   level: 'debug',
   targets: [{type: 'stdout'},

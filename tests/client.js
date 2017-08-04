@@ -1,5 +1,11 @@
 'use strict';
 
+/*
+  Simple script that sends requests at regular interval.
+  Usage: node ./client.js duration interval
+  sends a request every [interval] second for [duration] seconds
+*/
+
 const http = require('http'),
       chalk = require('chalk')
 
