@@ -24,6 +24,12 @@ var limit = limiter.createLimit({
 server.use(limit)
 ````
 
+## How
+
+Uses the token bucket algorithm. For each key (request grouping), a bucket is created with full capacity. Each accepted request decrements the amount of tokens in the bucket. When the bucket is empty, requests are rejected.
+
+The bucket is replenished by a fractional amount with each rejected request, function of the time elapsed since last update.
+
 
 ## API
 
