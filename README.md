@@ -5,7 +5,7 @@ Nodejs middleware that manages rate limiting &amp; request throttling. Uses the 
 
 Creating a new limit returns a function handler that can easily be plugged into Restify and other frameworks that support the common `(req, res, next)` middleware signature  format.
 
-Limits can be instance-specific or shared across multiple server. See *name* and *local* options.
+Limits can be instance-specific or shared across multiple servers. See *name* and *local* options.
 
 ````javascript
 limiter = require('swn-rate-limiter');
@@ -35,8 +35,8 @@ Options:
 
 Name    | Type    | Mandatory | Description
 --------|---------|-----------|-------------
-redis   | String  | yes       | redis connection string
-appName | String  | no       | An identifier for the app using the module. Defaults: ""
+redis   | String  | no        | redis connection string. Mandatory if using shared buckets.
+appName | String  | no        | An identifier for the app using the module. Defaults: ""
 logger  | Object  | no        | logger object. Must expose debug/info/error methods. Default: console.
 verbose | Boolean | no        | Default: false
 
