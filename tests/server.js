@@ -33,6 +33,7 @@ var limits = rateLimiter.createLimit({
   key: () => {return 'global'},
   rate: rate,
   name: 'all'
+  // local: true
 })
 
 // use the limit handler

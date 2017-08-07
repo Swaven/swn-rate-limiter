@@ -5,7 +5,7 @@ Nodejs middleware that manages rate limiting &amp; request throttling. Uses the 
 
 Creating a new limit returns a function handler that can easily be plugged into Restify and other frameworks that support the common `(req, res, next)` middleware signature  format.
 
-Limits can be instance-specific or shared across multiple server. See the *name* options.
+Limits can be instance-specific or shared across multiple server. See *name* and *local* options.
 
 ````javascript
 limiter = require('swn-rate-limiter');
@@ -69,7 +69,12 @@ Examples:
 Type: string  
 Mandatory: no (default: random string)  
 Limit identifier. If multiple limits share the same name, there will be a single bucket for them. So, limits that must apply cross-instances must have an explicit name, otherwise the random names will not match across instances.  
-On the other hand, instance-specific limits (e.g. max requests per server) must have a random name.
+On the other hand, instance-specific limits (e.g. max requests per server) must have a random name or set **local** to true.
+
+**local**  
+Type: Boolean  
+Mandatory: no (default: false)  
+Whether to use a local or remote bucket. A local bucket is stored in-memory, and is not shared across instances. A remote bucket uses Redis as a backend store and can be shared.
 
 **logger**  
 Type: object  
