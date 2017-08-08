@@ -1,6 +1,6 @@
 {
   "name": "swn-rate-limiter",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Express/Restify middleware for rate limiting",
   "main": "lib/middleware.js",
   "scripts": {
