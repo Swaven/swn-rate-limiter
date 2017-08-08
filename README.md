@@ -45,15 +45,20 @@ redis   | String  | no        | redis connection string. Mandatory if using shar
 appName | String  | no        | An identifier for the app using the module. Defaults: ""
 logger  | Object  | no        | logger object. Must expose debug/info/error methods. Default: console.
 verbose | Boolean | no        | Default: false
+sns     | Object  | no        | SNS configuration
+
+To send SNS notifications upon throttling activated/lifted, the *sns* object must have the following properties:
+- **service**: an SNS service object that exposes a *publish(arn, subject, message)* method
+- **arn**: ARN of the topic to use
 
 *NB*: Not specifying an appName will cause issues if multiple applications have limits with the same name and share the same redis server.
 
 **createLimit(options)**  
-Creates a new rate limit. See [Options](#options) for details.
+Creates a new rate limit. See [Options](#limit-options) for details.
 
 
 
-## Options
+## Limit Options
 
 **key**  
 Type: function  
@@ -64,7 +69,7 @@ Return a constant for a global limit that applies to all requests.
 **rate**  
 Type: string  
 Mandatory: true  
-The rate to apply. Must be in the form **number of requests** *slash* **time window**.  Time window can be a single unit, or a number and a unit for more complex rules (see examples below).  
+The rate to apply. Must be in the form **number of requests** *slash* **time window**.  Time window can be a single unit, or a number and a unit for more complex rules.  
 Accepted time units: 's' (second), 'm' (minute), 'h' (hour), 'd' (day).
 
 Examples:  

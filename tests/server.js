@@ -18,22 +18,32 @@ const restify = require('restify'),
 
 
 var server = restify.createServer(),
-    rate = process.argv[2]
+    rate = process.argv[2],
+    // sns mock service
+    snsObj = {
+      publish: function(arn, subject, message){
+        console.log(`SNS ${arn} ${subject} ${message}`)
+      }
+    }
 
 // set up limiter with redis connection
 rateLimiter.setup({
-  // redis: 'redis://localhost:6379',
+  redis: 'redis://localhost:6379',
   appName: 'demo-server',
   logger: logger,
-  verbose: true
+  verbose: true,
+  sns: {
+    service: snsObj,
+    arn: 'coin'
+  }
 })
 
 // creates a new limit
 var limits = rateLimiter.createLimit({
   key: () => {return 'global'},
   rate: rate,
-  name: 'all',
-  local: true
+  name: 'all'
+  // local: true
 })
 
 // use the limit handler
