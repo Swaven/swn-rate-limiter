@@ -1,6 +1,6 @@
 {
   "name": "swn-rate-limiter",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Express/Restify middleware for rate limiting",
   "main": "lib/middleware.js",
   "scripts": {
@@ -24,7 +24,7 @@
   "homepage": "https://github.com/Swaven/swn-rate-limiter#readme",
   "devDependencies": {
     "chalk": "^2.0.1",
-    "restify": "^5.0.1",
+    "restify": "^11.1.0",
     "swn-logger": "^1.0.0"
   },
   "dependencies": {
